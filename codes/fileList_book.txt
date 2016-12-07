@@ -1,0 +1,3 @@
+/home/naveen/TestingOCR/dict/0001/Page_0001.tif
+/home/naveen/TestingOCR/dict/0001/Page_0002.tif
+/home/naveen/TestingOCR/dict/0001/Page_0003.tif

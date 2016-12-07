@@ -1,0 +1,13 @@
+/home/naveen/TestingOCR/Malayalam_Images/7001/7001_IndiaToday_Img_600_Org_Page_0001.tif
+/home/naveen/TestingOCR/Malayalam_Images/7001/7001_IndiaToday_Img_600_Org_Page_0003.tif
+/home/naveen/TestingOCR/Malayalam_Images/7001/7001_IndiaToday_Img_600_Org_Page_0002.tif
+/home/naveen/TestingOCR/Malayalam_Images/7002/7002_Mathrubhumi_Img_600_Org_Page_0001.tif
+/home/naveen/TestingOCR/Malayalam_Images/7002/7002_Mathrubhumi_Img_600_Org_Page_0002.tif
+/home/naveen/TestingOCR/Malayalam_Images/7002/7002_Mathrubhumi_Img_600_Org_Page_0003.tif
+/home/naveen/TestingOCR/Malayalam_Images/7003/7003_Pachakuthira_Img_600_Org_Page_0001.tif
+/home/naveen/TestingOCR/Malayalam_Images/7003/7003_Pachakuthira_Img_600_Org_Page_0002.tif
+/home/naveen/TestingOCR/Malayalam_Images/7003/7003_Pachakuthira_Img_600_Org_Page_0003.tif
+/home/naveen/TestingOCR/Malayalam_Images/7004/7004_SamakalikaMalayalamVarika_Img_600_Org_Page_0001.tif
+/home/naveen/TestingOCR/Malayalam_Images/7004/7004_SamakalikaMalayalamVarika_Img_600_Org_Page_0003.tif
+/home/naveen/TestingOCR/Malayalam_Images/7004/7004_SamakalikaMalayalamVarika_Img_600_Org_Page_0002.tif
+

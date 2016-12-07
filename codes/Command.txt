@@ -1,0 +1,2 @@
+g++ -I/usr/local/include/leptonica/ -c -o pix1.o pix1.c
+make

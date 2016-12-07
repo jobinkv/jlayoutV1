@@ -1,0 +1,15 @@
+#!/bin/bash
+#make
+rm *.txt #lines.txt wordss2.txt blocks.txt words.txt
+./j-layout /mnt/data/completedCodes/kpsBasedLineSegmentation/testingVersion4/build/$1 
+#/home/jobin/data/completedCodes/tesseract-ocr/api/tesseract $1 haha
+#cmake .. # it will make the 
+#./main bin_$1 $1.blocks.txt lin.txt plot.png feture.txt
+./main $1 $1.words.txt lin.txt plot.png feture.txt
+
+mv plot.png $1.png
+eog $1.png 
+
+# out put is corrected block
+# out put format
+# x.cordn y.cordn width height

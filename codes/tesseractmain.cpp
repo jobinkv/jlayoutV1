@@ -1,0 +1,142 @@
+#include "mfcpch.h"
+// #define USE_VLD //Uncomment for Visual Leak Detector.
+#if (defined _MSC_VER && defined USE_VLD)
+#include <vld.h>
+#endif
+
+// Include automatically generated configuration file if running autoconf
+#ifdef HAVE_CONFIG_H
+#include "config_auto.h"
+#endif
+#ifdef USING_GETTEXT
+#include <libintl.h>
+#include <locale.h>
+#define _(x) gettext(x)
+#else
+#define _(x) (x)
+#endif
+
+#include "allheaders.h"
+#include "baseapi.h"
+#include "strngs.h"
+#include "tesseractmain.h"
+#include <iostream>
+using namespace std;
+
+/**********************************************************************
+ *  main()
+ *
+ **********************************************************************/
+
+int main(int argc, char **argv) {
+#ifdef USE_NLS
+  setlocale (LC_ALL, "");
+  bindtextdomain (PACKAGE, LOCALEDIR);
+  textdomain (PACKAGE);
+#endif
+  if ((argc == 2 && strcmp(argv[1], "-v") == 0) ||
+      (argc == 2 && strcmp(argv[1], "--version") == 0)) {
+    fprintf(stderr, "tesseract %s\n", tesseract::TessBaseAPI::Version());
+    exit(0);
+  }
+  // Make the order of args a bit more forgiving than it used to be.
+  const char* lang = "eng";
+  const char* image = NULL;
+  const char* output = NULL;
+  tesseract::PageSegMode pagesegmode = tesseract::PSM_AUTO;
+  int arg = 1;
+  while (arg < argc && (output == NULL || argv[arg][0] == '-')) {
+    if (strcmp(argv[arg], "-l") == 0 && arg + 1 < argc) {
+      lang = argv[arg + 1];
+      ++arg;
+    } else if (strcmp(argv[arg], "-psm") == 0 && arg + 1 < argc) {
+      pagesegmode = static_cast<tesseract::PageSegMode>(atoi(argv[arg + 1]));
+      ++arg;
+    } else if (image == NULL) {
+      image = argv[arg];
+    } else if (output == NULL) {
+      output = argv[arg];
+    }
+    ++arg;
+  }
+
+  tesseract::TessBaseAPI  api;
+
+  api.SetOutputName(output);
+  api.Init(argv[0], lang, tesseract::OEM_DEFAULT,
+           &(argv[arg]), argc - arg, NULL, NULL, false);
+
+  if (api.GetPageSegMode() == tesseract::PSM_SINGLE_BLOCK)
+    api.SetPageSegMode(pagesegmode);
+  //printf("Tesseract Open Source OCR Engine v%s with Leptonica\n",
+           //tesseract::TessBaseAPI::Version());
+
+
+  FILE* fin = fopen(image, "rb");
+  if (fin == NULL) {
+    printf("Cannot open input file: %s\n", image);
+    exit(2);
+  }
+  fclose(fin);
+
+  PIX   *pixs;
+  if ((pixs = pixRead(image)) == NULL) {
+    printf("Unsupported image type.\n");
+    exit(3);
+  }
+  pixDestroy(&pixs);
+
+  STRING text_out;
+  if (!api.ProcessPages(image, NULL, 0, &text_out)) {
+    printf("Done ! .\n");
+  }
+  bool output_hocr = false;
+  api.GetBoolVariable("tessedit_create_hocr", &output_hocr);
+  bool output_box = false;
+  api.GetBoolVariable("tessedit_create_boxfile", &output_box);
+  STRING outfile = output;
+  outfile += output_hocr ? ".html" : output_box ? ".box" : ".txt";
+
+
+  return 0;                      // Normal exit
+}
+
+#ifdef __MSW32__
+
+char szAppName[] = "Tesseract";   //app name
+int initialized = 0;
+
+
+
+int
+parse_args (                     /*refine arg list */
+        int argc,                /*no of input args */
+        char *argv[],            /*input args */
+        char *arglist[]          /*output args */
+        ) {
+  int argcount;            /*converted argc */
+  char *testchar;          /*char in option string */
+  int arg;                 /*current argument */
+
+  argcount = 0;            /*no of options */
+  for (arg = 0; arg < argc; arg++) {
+    testchar = argv[arg]; /*start of arg */
+    do {
+      while (*testchar
+             && (*testchar == ' ' || *testchar == '\n'
+                 || *testchar == '\t'))
+        testchar++; /*skip white space */
+      if (*testchar) {
+        /*new arg */
+        arglist[argcount++] = testchar;
+        /*skip to white space */
+        for (testchar++; *testchar && *testchar != ' ' && *testchar != '\n' && *testchar != '\t'; testchar++) ;
+        if (*testchar)
+          *testchar++ = '\0'; /*turn to separate args */
+      }
+    }
+    while (*testchar);
+  }
+  return argcount;         /*new number of args */
+}
+#endif
