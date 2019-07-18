@@ -23,9 +23,8 @@ engine at http://code.google.com/p/tesseract-ocr.
 ### Papers
 * [The core idea in the segmentation technique](https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/35094.pdf).
 
-## Note:
-Those who are interested to use this code for getting word, line, and block bountary cordinate.
-I highly recomented to use the PyTessBaseAPI as simple and eazy way to get the boundary information.
+## Note (An alternative):
+Those who are interested to use this code for getting the word, line, and block boundary coordinate. I highly recommended using the PyTessBaseAPI as a simple and easy way to get the boundary information.
 
 ### Sample code
 ```javascript
